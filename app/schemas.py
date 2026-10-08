@@ -1,0 +1,92 @@
+from pydantic import BaseModel, EmailStr
+from typing import Optional
+from datetime import datetime
+
+
+# POST SCHEMAS
+
+class PostBase(BaseModel):
+    title: str
+    body: str
+    published: bool = True
+    rating: Optional[int] = None
+
+
+class PostCreate(PostBase):
+    pass
+
+
+class PostUpdate(PostBase):
+    pass
+
+
+class OwnerInfo(BaseModel):
+    id: int
+    username: str
+    email: EmailStr
+
+    class Config:
+        from_attributes = True
+
+
+
+class PostResponse(PostBase):
+    id: int
+    created_at: datetime
+    owner_id: Optional[int] = None
+    owner: Optional[OwnerInfo] = None
+
+    class Config:
+        from_attributes = True
+
+
+# USER SCHEMAS
+
+class UserCreate(BaseModel):
+    username: str
+    email: EmailStr
+    password: str
+
+
+class UserResponse(BaseModel):
+    id: int
+    username: str
+    email: EmailStr
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+
+
+class Category(BaseModel):
+    name: str
+    description: Optional[str] = None
+
+
+class CategoryResponse(Category):
+    id: int
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class PostWithOwner(PostResponse):
+    owner: Optional['UserResponse'] = None
+
+
+class Token(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    id: Optional[str] = None
+
+
+
+class PasswordChange(BaseModel):
+    old_password: str
+    new_password: str
