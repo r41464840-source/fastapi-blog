@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     database_url: str
     secret_key: str
     debug: bool = False
-    environment: str = "development"
+    environment: str = "production"
     algorithm: str
     access_token_expire_minutes: int
 
