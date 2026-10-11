@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     database_url: str
     secret_key: str
     debug: bool = False
+    environment: str = "development"
     algorithm: str
     access_token_expire_minutes: int
 
@@ -14,6 +15,10 @@ class Settings(BaseSettings):
     @property
     def origins_list(self) -> List[str]:
         return [origin.strip() for origin in self.allowed_origins.split(",")]
+
+    @property
+    def is_production(self) -> bool:
+        return self.environment == "production"
 
     class Config:
         env_file = ".env"
