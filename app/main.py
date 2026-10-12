@@ -2,6 +2,8 @@ import logging
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import text
+from .database import engine
 
 from .config import settings
 from .routers import posts, users, auth, categories
@@ -45,3 +47,14 @@ app.include_router(categories.router)
 @app.get("/")
 def root():
     return {"xabar": "Blog API v4.0 — GitHub Actions auto-deploy ishlayapti!"}
+
+
+@app.get("/health")
+def health_check():
+    try:
+        with engine.connect() as connection:
+            connection.execute(text("SELECT 1"))
+        return {"status": "ok", "database": "connected"}
+    except Exception:
+        logger.exception("Health check failed")
+        return {"status": "error", "database": "disconnected"}
