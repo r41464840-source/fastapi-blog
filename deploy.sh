@@ -1,4 +1,3 @@
-```bash
 #!/bin/bash
 set -e
 
@@ -25,4 +24,3 @@ sudo systemctl restart fastapi-blog
 sudo systemctl is-active --quiet fastapi-blog
 
 echo "Deployment completed successfully!"
-```
