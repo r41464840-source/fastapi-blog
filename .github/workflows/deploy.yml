@@ -23,7 +23,7 @@ jobs:
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids i-0c9896093fd63f284 \
             --document-name AWS-RunShellScript \
-            --parameters 'commands=["sudo -u ubuntu bash -lc '\''cd /home/ubuntu/fastapi-blog && bash deploy.sh'\''"]' \
+            --parameters 'commands=["sudo -u ubuntu bash -lc '\''cd /home/ubuntu/fastapi-blog && git diff --quiet && git diff --cached --quiet && git pull --ff-only origin main && bash deploy.sh'\''"]' \
             --query 'Command.CommandId' \
             --output text)
 
