@@ -46,7 +46,7 @@ app.include_router(categories.router)
 
 @app.get("/")
 def root():
-    return {"xabar": "Blog API v4.0 — GitHub Actions auto-deploy ishlayapti!"}
+    return {"xabarlar": "Blog API v4.0 — GitHub Actions auto-deploy ishlayapti!"}
 
 
 @app.get("/health")
